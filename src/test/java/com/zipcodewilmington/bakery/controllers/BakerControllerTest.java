@@ -2,9 +2,11 @@ package com.zipcodewilmington.bakery.controllers;
 
 import com.zipcodewilmington.bakery.models.Baker;
 import com.zipcodewilmington.bakery.repositories.BakerRepository;
+import org.json.JSONString;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,17 +52,16 @@ public class BakerControllerTest {
     @Test
     public void testCreate() throws Exception {
         Baker baker = new Baker("New Baker!", null, null);
-        BDDMockito
-                .given(repository.save(baker))
-                .willReturn(baker);
+      Mockito.when(repository.save(baker)).thenReturn(baker);
 
         String expectedContent="{\"id\":null,\"name\":\"New Baker!\",\"employeeId\":null,\"specialty\":null}";
         this.mvc.perform(MockMvcRequestBuilders
                 .post("/bakers/")
-                .content(expectedContent)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-            )
+                .content("{\"id\":null,\"name\":\"New Baker!\",\"employeeId\":null,\"specialty\":null}")
+
+        )
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string(expectedContent));
     }

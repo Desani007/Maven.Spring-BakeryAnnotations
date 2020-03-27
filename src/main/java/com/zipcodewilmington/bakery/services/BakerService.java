@@ -2,8 +2,13 @@ package com.zipcodewilmington.bakery.services;
 
 import com.zipcodewilmington.bakery.models.Baker;
 import com.zipcodewilmington.bakery.repositories.BakerRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
-public class BakerService {
+@Service
+public class BakerService  {
+
     private BakerRepository repository;
 
     public BakerService(BakerRepository repository) {
